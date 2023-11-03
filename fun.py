@@ -15,3 +15,12 @@ def are_isomorphic(m_0: list[list[int]], m_1: list[list[int]]):
 			return True
 
 	return False
+
+
+def is_regular(adjacency_matrix: list[list[int]]):
+	# Todos os vértices têm que ter o mesmo grau
+	degree = sum(adjacency_matrix[0])
+	for row in adjacency_matrix:
+		if sum(row) != degree:
+			return False
+	return True

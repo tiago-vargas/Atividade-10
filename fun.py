@@ -2,7 +2,7 @@ import numpy as np
 import itertools
 
 
-def are_isomorphic(m_0: list[list[int]], m_1: list[list[int]]):
+def are_isomorphic(m_0: list[list[int]], m_1: list[list[int]]) -> bool:
 	matrix_0 = np.array(m_0)
 	matrix_1 = np.array(m_1)
 
@@ -17,10 +17,31 @@ def are_isomorphic(m_0: list[list[int]], m_1: list[list[int]]):
 	return False
 
 
-def is_regular(adjacency_matrix: list[list[int]]):
-	# Todos os vértices têm que ter o mesmo grau
+def is_regular(adjacency_matrix: list[list[int]]) -> bool:
+	"""Todos os vértices têm que ter o mesmo grau"""
 	degree = sum(adjacency_matrix[0])
 	for row in adjacency_matrix:
 		if sum(row) != degree:
 			return False
 	return True
+
+
+def is_wheel(incidence_matrix: list[list[int]]) -> bool:
+	"""1 vértice de grau n-1 e n-1 vértices de grau 3"""
+	n_vertices = len(incidence_matrix)
+	n_edges = len(incidence_matrix[0])
+	if n_edges != (n_vertices - 1) * 2:
+		return False
+
+	row_sums: list[int] = [sum(row) for row in incidence_matrix]
+
+	transpose = zip(*incidence_matrix)
+	col_sums: list[int] = [sum(row) for row in transpose]
+
+	n = n_vertices
+	count_n = row_sums.count(n - 1)
+	count_3 = row_sums.count(3)
+	if count_n == 1 and count_3 == n - 1:
+		return True
+
+	return False

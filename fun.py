@@ -45,3 +45,17 @@ def is_wheel(incidence_matrix: list[list[int]]) -> bool:
 		return True
 
 	return False
+
+
+import numpy as np
+
+
+def generate_incidence_matrix_for_bipartite_graph(m: int, n: int) -> list[list[int]]:
+	"""Faz a matriz com 0s, depois bota 1 onde precisa"""
+	incidence_matrix = np.zeros((m + n, m * n))
+
+	for i in range(m):
+		for j in range(n):
+			incidence_matrix[i][i*n + j] = 1
+			incidence_matrix[m + j][i*n + j] = 1
+	return incidence_matrix
